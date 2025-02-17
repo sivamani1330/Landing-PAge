@@ -20,7 +20,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      /* New moving & shining gradient background */
       background-color: #00DBDE;
       background-image: linear-gradient(to right, #00DBDE 0%, #FC00FF 100%);
       background-size: 200% 200%;
@@ -66,8 +65,7 @@
       font-size: 150px;
       letter-spacing: -0.02em;
       color: #ffffff; 
-  /* Or #000 for black text on light background */
-}
+    }
     .search-container {
       width: 500px;
       padding: 20px;
@@ -85,51 +83,6 @@
       outline: none;
       border-radius: 5px;
     }
-    .tools {
-      margin-top: 20px;
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-    .tool-btn {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border-radius: 50%;
-      text-decoration: none;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: background 0.3s;
-      position: relative;
-    }
-    .tool-btn:hover {
-      background: #ddd;
-    }
-    .tool-btn img {
-      width: 24px;
-      height: 24px;
-      object-fit: cover;
-    }
-    /* Add Tool Button styling */
-    .add-tool {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      font-size: 24px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: background 0.3s;
-    }
-    .add-tool:hover {
-      background: #ddd;
-    }
   </style>
 </head>
 <body>
@@ -137,22 +90,6 @@
   <div class="google-logo">GOOGLE</div>
   <div class="search-container">
     <input type="text" id="search-box" placeholder="Search Google or type a URL" onkeypress="handleKeyPress(event)" />
-  </div>
-  <div class="tools" id="tools">
-    <a href="https://www.youtube.com" class="tool-btn" target="_blank">
-      <img src="https://www.google.com/s2/favicons?domain=youtube.com" alt="YouTube" />
-    </a>
-    <a href="https://mail.google.com" class="tool-btn" target="_blank">
-      <img src="https://www.google.com/s2/favicons?domain=mail.google.com" alt="Gmail" />
-    </a>
-    <a href="https://drive.google.com" class="tool-btn" target="_blank">
-      <img src="https://www.google.com/s2/favicons?domain=drive.google.com" alt="Drive" />
-    </a>
-    <a href="https://docs.google.com" class="tool-btn" target="_blank">
-      <img src="https://www.google.com/s2/favicons?domain=docs.google.com" alt="Docs" />
-    </a>
-    <!-- Add Tool button styled like a tool button -->
-    <button class="add-tool" onclick="addTool()">+</button>
   </div>
   <script>
     function handleKeyPress(event) {
@@ -163,46 +100,6 @@
         }
       }
     }
-  
-    function addTool() {
-      const toolName = prompt("Enter tool name (for alt text):");
-      const toolLink = prompt("Enter tool URL:");
-      if (toolName && toolLink) {
-        try {
-          // Extract domain from the provided URL
-          const domain = new URL(toolLink).hostname;
-          const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}`;
-  
-          // Create new tool button with favicon
-          const newTool = document.createElement("a");
-          newTool.href = toolLink;
-          newTool.className = "tool-btn";
-          newTool.target = "_blank";
-  
-          const img = document.createElement("img");
-          img.src = faviconUrl;
-          img.alt = toolName;
-  
-          newTool.appendChild(img);
-          // Insert the new tool before the Add Tool button
-          const toolsContainer = document.getElementById("tools");
-          toolsContainer.insertBefore(newTool, toolsContainer.lastElementChild);
-        } catch (error) {
-          alert("Please enter a valid URL.");
-        }
-      }
-    }
-  
-    // Remove tool on right-click (contextmenu)
-    document.getElementById("tools").addEventListener("contextmenu", function(event) {
-      const toolBtn = event.target.closest('.tool-btn');
-      if (toolBtn && !toolBtn.classList.contains("add-tool")) {
-        event.preventDefault();
-        if (confirm("Remove this tool?")) {
-          toolBtn.remove();
-        }
-      }
-    });
   </script>
 </body>
 </html>
