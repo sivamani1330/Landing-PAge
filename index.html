@@ -20,20 +20,24 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      /* Animated background gradient */
+      /* New moving & shining gradient background */
       background-color: #00DBDE;
-      background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
-      animation: gradientAnimation 15s ease infinite;
+      background-image: linear-gradient(to right, #00DBDE 0%, #FC00FF 100%);
+      background-size: 200% 200%;
+      animation: shineGradient 6s ease-in-out infinite;
     }
-    @keyframes gradientAnimation {
+    @keyframes shineGradient {
       0% {
-        background-position: 0% 50%;
+        background-position: 0% 0%;
+        filter: brightness(1);
       }
       50% {
-        background-position: 100% 50%;
+        background-position: 100% 0%;
+        filter: brightness(1.3);
       }
       100% {
-        background-position: 0% 50%;
+        background-position: 0% 0%;
+        filter: brightness(1);
       }
     }
     .typing-text {
@@ -186,11 +190,9 @@
       }
     }
   
-    // Add event listener to remove tool on right-click (contextmenu)
+    // Remove tool on right-click (contextmenu)
     document.getElementById("tools").addEventListener("contextmenu", function(event) {
-      // Find the closest element with class "tool-btn"
       const toolBtn = event.target.closest('.tool-btn');
-      // Only allow removal if it's not the Add Tool button
       if (toolBtn && !toolBtn.classList.contains("add-tool")) {
         event.preventDefault();
         if (confirm("Remove this tool?")) {
