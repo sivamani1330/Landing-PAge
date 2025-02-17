@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chrome Clone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* Animated background gradient */
+      background: linear-gradient(45deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+    }
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .typing-text {
+      font-size: 26px;
+      font-weight: 100;
+      color: #fff;
+      margin-bottom: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #fff;
+      width: 0;
+      animation: typing 2s steps(20, end) infinite alternate, blink 0.9s infinite;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 160px; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+    .google-logo {
+      font-size: 150px;
+      font-weight: 200;
+      color: #4285F4;
+      text-shadow: -1px -1px 0 #EA4335, 1px -1px 0 #FBBC05, -1px 1px 0 #34A853, 1px 1px 0 #4285F4;
+      margin-bottom: 20px;
+    }
+    .search-container {
+      width: 500px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+    }
+    .tools {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .tool-btn {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 50%;
+      text-decoration: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+      position: relative;
+    }
+    .tool-btn:hover {
+      background: #ddd;
+    }
+    .tool-btn img {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+    }
+    /* Add Tool Button styling */
+    .add-tool {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+    }
+    .add-tool:hover {
+      background: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="typing-text">SHIVA🤍👀</div>
+  <div class="google-logo">GOOGLE</div>
+  <div class="search-container">
+    <input type="text" id="search-box" placeholder="Search Google or type a URL" onkeypress="handleKeyPress(event)" />
+  </div>
+  <div class="tools" id="tools">
+    <a href="https://www.youtube.com" class="tool-btn" target="_blank">
+      <img src="https://www.google.com/s2/favicons?domain=youtube.com" alt="YouTube" />
+    </a>
+    <a href="https://mail.google.com" class="tool-btn" target="_blank">
+      <img src="https://www.google.com/s2/favicons?domain=mail.google.com" alt="Gmail" />
+    </a>
+    <a href="https://drive.google.com" class="tool-btn" target="_blank">
+      <img src="https://www.google.com/s2/favicons?domain=drive.google.com" alt="Drive" />
+    </a>
+    <a href="https://docs.google.com" class="tool-btn" target="_blank">
+      <img src="https://www.google.com/s2/favicons?domain=docs.google.com" alt="Docs" />
+    </a>
+    <!-- Add Tool button styled like a tool button -->
+    <button class="add-tool" onclick="addTool()">+</button>
+  </div>
+  <script>
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        let query = document.getElementById('search-box').value;
+        if (query) {
+          window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+        }
+      }
+    }
+  
+    function addTool() {
+      const toolName = prompt("Enter tool name (for alt text):");
+      const toolLink = prompt("Enter tool URL:");
+      if (toolName && toolLink) {
+        try {
+          // Extract domain from the provided URL
+          const domain = new URL(toolLink).hostname;
+          const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}`;
+  
+          // Create new tool button with favicon
+          const newTool = document.createElement("a");
+          newTool.href = toolLink;
+          newTool.className = "tool-btn";
+          newTool.target = "_blank";
+  
+          const img = document.createElement("img");
+          img.src = faviconUrl;
+          img.alt = toolName;
+  
+          newTool.appendChild(img);
+          // Insert the new tool before the Add Tool button
+          const toolsContainer = document.getElementById("tools");
+          toolsContainer.insertBefore(newTool, toolsContainer.lastElementChild);
+        } catch (error) {
+          alert("Please enter a valid URL.");
+        }
+      }
+    }
+  
+    // Add event listener to remove tool on right-click (contextmenu)
+    document.getElementById("tools").addEventListener("contextmenu", function(event) {
+      // Find the closest element with class "tool-btn"
+      const toolBtn = event.target.closest('.tool-btn');
+      // Only allow removal if it's not the Add Tool button
+      if (toolBtn && !toolBtn.classList.contains("add-tool")) {
+        event.preventDefault();
+        if (confirm("Remove this tool?")) {
+          toolBtn.remove();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
